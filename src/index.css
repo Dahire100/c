@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", var(--font-sans);
+  --font-display: "Instrument Serif", serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-bg: #05050C;
+  --color-surface: rgba(20, 20, 40, 0.6);
+  --color-card: rgba(255, 255, 255, 0.03);
+  --color-text: #F0F0F0;
+  --color-muted: rgba(255, 255, 255, 0.5);
+
+  --color-purple-accent: #A78BFA;
+  --color-blue-accent: #60A5FA;
+  --color-pink-accent: #F0ABFC;
+}
+
+@layer base {
+  :root {
+    --bg: #05050C;
+    --surface: rgba(20, 20, 40, 0.6);
+    --card: rgba(255, 255, 255, 0.03);
+    --text: #F0F0F0;
+    --muted: rgba(255, 255, 255, 0.5);
+    
+    --purple: #A78BFA;
+    --blue: #60A5FA;
+    --pink: #F0ABFC;
+    
+    --accent-gradient: linear-gradient(90deg, #8B5CF6, #60A5FA, #F0ABFC);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: #05050C;
+    color: #F0F0F0;
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: #05050C;
+    color: #F0F0F0;
+    overflow-x: hidden;
+  }
+
+  /* Custom high-end scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #05050C;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #8B5CF6, #60A5FA);
+    border-radius: 9999px;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(90deg, #8B5CF6, #60A5FA, #F0ABFC);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-gradient-accent {
+    background: linear-gradient(90deg, #8B5CF6, #60A5FA, #F0ABFC);
+  }
+
+  .border-gradient-accent {
+    border-image: linear-gradient(90deg, #8B5CF6, #60A5FA, #F0ABFC) 1;
+  }
+
+  .glass-panel {
+    background: rgba(13, 16, 28, 0.45);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  }
+
+  .glass-panel-hover {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .glass-panel-hover:hover {
+    background: rgba(13, 16, 28, 0.6);
+    border-color: rgba(139, 92, 246, 0.3);
+    box-shadow: 0 12px 40px 0 rgba(139, 92, 246, 0.15);
+  }
+
+  .glow-purple {
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.35);
+  }
+
+  .glow-blue {
+    box-shadow: 0 0 25px rgba(96, 165, 250, 0.35);
+  }
+
+  .glow-pink {
+    box-shadow: 0 0 25px rgba(240, 171, 252, 0.35);
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+}
+
+/* Base custom interactive cursor overlay styling */
+.cursor-glow {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(96, 165, 250, 0.05) 50%, rgba(0,0,0,0) 70%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease;
+  z-index: 1;
+}
+
+/* Keyframes for animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.15);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 8s ease-in-out infinite;
+}
+
+/* Custom layout typography helper */
+.font-display-serif {
+  font-family: var(--font-display);
+}
+
+/* Print styles to handle clean single-page PDF generation of the Resume */
+@media print {
+  html, body {
+    background-color: #ffffff !important;
+    background-image: none !important;
+    color: #000000 !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Hide the root app and any background canvas elements */
+  #root > div:not(.print-container-wrapper),
+  #root > section,
+  #root > nav,
+  #root > footer,
+  canvas {
+    display: none !important;
+  }
+
+  /* Show only the modal/printable wrapper content */
+  .fixed {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    background: #ffffff !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+    overflow: visible !important;
+    z-index: 99999 !important;
+    backdrop-filter: none !important;
+  }
+
+  /* Force modal content container to fit nicely on paper */
+  .max-w-4xl {
+    max-width: 100% !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* Direct resume card */
+  #printable-resume-container {
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    border-radius: 0 !important;
+  }
+}
